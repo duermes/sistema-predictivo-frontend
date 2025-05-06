@@ -13,12 +13,13 @@ import { PredictionChart } from "@/app/components/dashboard/prediction-chart";
 import { DataTable } from "./data-table";
 
 const productTypeOptions: SelectOption[] = [
-  { value: "insumo", label: "Insumo" },
-  { value: "medicamento", label: "Medicamento" },
+  { value: "S", label: "Insumo" },
+  { value: "D", label: "Medicamento" },
 ];
 
 const demandSupportOptions: SelectOption[] = [
-  { value: "demanda_soporte", label: "Demanda soporte" },
+  { value: "demanda", label: "Demanda" },
+  { value: "soporte", label: "Soporte" },
   { value: "estrategia", label: "Estrategia" },
 ];
 
