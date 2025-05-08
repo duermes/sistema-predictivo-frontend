@@ -1,53 +1,100 @@
 "use client";
-
 import { useState } from "react";
-import { DatePickerWithRange } from "@/app/components/dashboard/date-range-picker";
 import { FileDown, Percent } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, type SelectOption } from "@/app/components/dashboard/select";
 
 import { Checkbox } from "@/app/components/dashboard/checkbox";
 import { Card } from "@/components/ui/card";
-import type { DateRange } from "react-day-picker";
 import { PredictionChart } from "@/app/components/dashboard/prediction-chart";
 import { DataTable } from "./data-table";
+import { MonthRangeDropdown } from "./month-range-dropdown";
+import { MonthRange } from "./month-range-picker";
 
 const productTypeOptions: SelectOption[] = [
-  { value: "S", label: "Insumo" },
-  { value: "D", label: "Medicamento" },
+  { value: "I", label: "Insumo" },
+  { value: "M", label: "Medicamento" },
 ];
 
+// medEST en mproducto es el tipo de estrategia
 const demandSupportOptions: SelectOption[] = [
-  { value: "demanda", label: "Demanda" },
-  { value: "soporte", label: "Soporte" },
-  { value: "estrategia", label: "Estrategia" },
+  { value: "_", label: "Demanda" },
+  { value: "S", label: "Soporte" },
+  { value: "E", label: "Estrategia" },
 ];
 
 const timeOptions: SelectOption[] = [
   { value: "trimestral", label: "Trimestral" },
 ];
 
+const formatToYYYYMM = (date: Date) => {
+  return `${date.getFullYear()}${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}`;
+};
+
 export function PredictiveSystem() {
   const [productType, setProductType] = useState<string>("");
   const [demandSupport, setDemandSupport] = useState<string>("");
-  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [monthRange, setMonthRange] = useState<MonthRange>({
+    from: null,
+    to: null,
+  });
   const [realTime, setRealTime] = useState(false);
   const [showChart, setShowChart] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  // esta funcion puede que la deje de usar, borrar cuando loading y setLoading funcionen
   const handlePredict = () => {
-    if (!productType || !demandSupport || !dateRange?.from) {
-      alert("Por favor, complete todos los campos requeridos");
-      return;
-    }
+    console.log(monthRange);
+    // if (!productType || !demandSupport || !monthRange.from || !monthRange.to) {
+    //   alert("Por favor, complete todos los campos requeridos");
+    //   return;
+    // }
 
     setShowChart(true);
+    // console.log({
+    //   productType,
+    //   demandSupport,
+    //   monthRange,
+    //   realTime,
+    //   startDate,
+    //   endDate,
+    // });
+  };
 
-    console.log({
-      productType,
-      demandSupport,
-      dateRange,
-      realTime,
+  const getProducts = async () => {
+    setLoading(true);
+    if (!productType || !demandSupport || !monthRange.from || !monthRange.to) {
+      alert("Por favor, complete todos los campos requeridos");
+      setLoading(false);
+      return;
+    }
+    const startDate = formatToYYYYMM(monthRange.from);
+    const endDate = formatToYYYYMM(monthRange.to);
+
+    const queryParams = new URLSearchParams({
+      start_date: startDate,
+      end_date: endDate,
+      product_type: productType,
+      strategy: demandSupport,
     });
+
+    await fetch(`${process.env.API_URL}/api/data/summary?${queryParams}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoading(false);
+      });
   };
 
   return (
@@ -91,9 +138,9 @@ export function PredictiveSystem() {
             </div>
           </div>
           <div className="bg-gray-100 p-2 rounded-b-md">
-            <DatePickerWithRange
-              dateRange={dateRange}
-              setDateRange={setDateRange}
+            <MonthRangeDropdown
+              monthRange={monthRange}
+              setMonthRange={setMonthRange}
             />
           </div>
         </div>
