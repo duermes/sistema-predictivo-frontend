@@ -16,7 +16,6 @@ const productTypeOptions: SelectOption[] = [
   { value: "M", label: "Medicamento" },
 ];
 
-// medEST en mproducto es el tipo de estrategia
 const demandSupportOptions: SelectOption[] = [
   { value: "_", label: "Demanda" },
   { value: "S", label: "Soporte" },
@@ -42,25 +41,19 @@ export function PredictiveSystem() {
   });
   const [realTime, setRealTime] = useState(false);
   const [showChart, setShowChart] = useState(false);
+  const [data, setData] = useState([]);
+  const [months, setMonths] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // esta funcion puede que la deje de usar, borrar cuando loading y setLoading funcionen
   const handlePredict = () => {
     console.log(monthRange);
-    // if (!productType || !demandSupport || !monthRange.from || !monthRange.to) {
-    //   alert("Por favor, complete todos los campos requeridos");
-    //   return;
-    // }
-
+    if (!productType || !demandSupport || !monthRange.from || !monthRange.to) {
+      alert("Por favor, complete todos los campos requeridos");
+      return;
+    }
+    getProducts();
     setShowChart(true);
-    // console.log({
-    //   productType,
-    //   demandSupport,
-    //   monthRange,
-    //   realTime,
-    //   startDate,
-    //   endDate,
-    // });
   };
 
   const getProducts = async () => {
@@ -80,14 +73,19 @@ export function PredictiveSystem() {
       strategy: demandSupport,
     });
 
-    await fetch(`${process.env.API_URL}/api/data/summary?${queryParams}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API}/api/data/summary?${queryParams}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
+        setData(data.data);
+        setMonths(data.months);
         console.log(data);
         setLoading(false);
       })
@@ -114,7 +112,7 @@ export function PredictiveSystem() {
             options={demandSupportOptions}
             value={demandSupport}
             onValueChange={setDemandSupport}
-            placeholder="Demanda / Soporte"
+            placeholder="Estado"
           />
         </div>
 
@@ -170,7 +168,7 @@ export function PredictiveSystem() {
           </Card>
 
           <div className="mt-6 overflow-x-auto">
-            <DataTable />
+            <DataTable data={data} isLoading={loading} months={months} />
           </div>
         </>
       )}
