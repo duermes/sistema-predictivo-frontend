@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { FileDown, Percent } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select, type SelectOption } from "@/app/components/dashboard/select";
+import { Select, type SelectOption } from "@/components/ui/select";
 
-import { Checkbox } from "@/app/components/dashboard/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
-import { PredictionChart } from "@/app/components/dashboard/prediction-chart";
+import { PredictionChart } from "@/components/dashboard/prediction-chart";
 import { DataTable } from "./data-table";
 import { MonthRangeDropdown } from "./month-range-dropdown";
 import { MonthRange } from "./month-range-picker";
@@ -33,8 +33,8 @@ const formatToYYYYMM = (date: Date) => {
 };
 
 export function PredictiveSystem() {
-  const [productType, setProductType] = useState<string>("");
-  const [demandSupport, setDemandSupport] = useState<string>("");
+  const [productType, setProductType] = useState<string[]>([]);
+  const [demandSupport, setDemandSupport] = useState<string[]>([]);
   const [monthRange, setMonthRange] = useState<MonthRange>({
     from: null,
     to: null,
@@ -43,6 +43,7 @@ export function PredictiveSystem() {
   const [showChart, setShowChart] = useState(false);
   const [data, setData] = useState([]);
   const [months, setMonths] = useState([]);
+  const [counter, setCounter] = useState(0);
   const [loading, setLoading] = useState(false);
 
   // esta funcion puede que la deje de usar, borrar cuando loading y setLoading funcionen
@@ -69,8 +70,9 @@ export function PredictiveSystem() {
     const queryParams = new URLSearchParams({
       start_date: startDate,
       end_date: endDate,
-      product_type: productType,
-      strategy: demandSupport,
+      product_type: productType.join(","),
+      strategy: demandSupport.join(","),
+      real_time: realTime ? "true" : "false",
     });
 
     await fetch(
@@ -86,7 +88,9 @@ export function PredictiveSystem() {
       .then((data) => {
         setData(data.data);
         setMonths(data.months);
+        setCounter(data.count);
         console.log(data);
+        console.log(counter);
         setLoading(false);
       })
       .catch((error) => {
@@ -101,8 +105,8 @@ export function PredictiveSystem() {
         <div className="bg-gray-100 p-2 rounded-md">
           <Select
             options={productTypeOptions}
-            value={productType}
-            onValueChange={setProductType}
+            values={productType}
+            onValuesChange={setProductType}
             placeholder="Tipo de Producto"
           />
         </div>
@@ -110,8 +114,8 @@ export function PredictiveSystem() {
         <div className="bg-gray-100 p-2 rounded-md">
           <Select
             options={demandSupportOptions}
-            value={demandSupport}
-            onValueChange={setDemandSupport}
+            values={demandSupport}
+            onValuesChange={setDemandSupport}
             placeholder="Estado"
           />
         </div>
@@ -119,8 +123,8 @@ export function PredictiveSystem() {
         <div className="bg-gray-100 p-2 rounded-md">
           <Select
             options={timeOptions}
-            value=""
-            onValueChange={() => {}}
+            values={[""]}
+            onValuesChange={() => {}}
             placeholder="Trimestral"
             disabled
           />
@@ -166,7 +170,9 @@ export function PredictiveSystem() {
           <Card className="p-4 bg-gray-50">
             <PredictionChart />
           </Card>
-
+          <p className="text-sm text-gray-500">
+            {counter > 0 ? `Se encontraron ${counter} productos` : ""}
+          </p>
           <div className="mt-6 overflow-x-auto">
             <DataTable data={data} isLoading={loading} months={months} />
           </div>

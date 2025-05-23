@@ -1,4 +1,4 @@
-import { PredictiveSystem } from "../components/dashboard/predictive-system";
+import { PredictiveSystem } from "../../components/dashboard/predictive-system";
 
 export default function Dashboard() {
   return (
