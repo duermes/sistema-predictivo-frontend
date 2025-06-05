@@ -8,8 +8,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { PredictionChart } from "@/components/dashboard/prediction-chart";
 import { DataTable } from "./data-table";
-import { MonthRangeDropdown } from "./month-range-dropdown";
-import { MonthRange } from "./month-range-picker";
+import { MonthRangeDropdown } from "@/components/ui/month-range-dropdown";
+import { MonthRange } from "../ui/month-range-picker";
 
 const productTypeOptions: SelectOption[] = [
   { value: "I", label: "Insumo" },
@@ -48,7 +48,6 @@ export function PredictiveSystem() {
 
   // esta funcion puede que la deje de usar, borrar cuando loading y setLoading funcionen
   const handlePredict = () => {
-    console.log(monthRange);
     if (!productType || !demandSupport || !monthRange.from || !monthRange.to) {
       alert("Por favor, complete todos los campos requeridos");
       return;

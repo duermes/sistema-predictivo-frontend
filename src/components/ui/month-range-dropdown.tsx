@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { MonthRangePicker, type MonthRange } from "./month-range-picker";
+import { MonthRangePicker, type MonthRange } from "../ui/month-range-picker";
 import { cn } from "@/lib/utils";
 import {
   Popover,
