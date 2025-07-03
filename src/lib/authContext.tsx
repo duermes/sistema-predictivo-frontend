@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({
 
   const login = async (email: string, password: string, token: string) => {
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API}/auth/login`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

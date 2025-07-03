@@ -2,9 +2,9 @@
 
 import type React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {usePathname} from "next/navigation";
+import {Button} from "@/components/ui/button";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,7 +42,8 @@ import {
   Calendar,
   FileText,
 } from "lucide-react";
-import { ReactNode } from "react";
+import {ReactNode} from "react";
+import {useRouter} from "next/navigation";
 
 const navigationItems = [
   {
@@ -92,9 +93,13 @@ const navigationItems = [
   },
 ];
 
-export default function Navbar({ children }: { children: ReactNode }) {
+export default function Navbar({children}: {children: ReactNode}) {
   const pathname = usePathname();
+  const router = useRouter();
 
+  const handleLogOut = () => {
+    router.push("/auth/login");
+  };
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full auto">
@@ -183,7 +188,10 @@ export default function Navbar({ children }: { children: ReactNode }) {
                       Configuración
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="text-red-600">
+                    <DropdownMenuItem
+                      className="text-red-600"
+                      onClick={handleLogOut}
+                    >
                       <LogOut className="mr-2 h-4 w-4" />
                       Cerrar Sesión
                     </DropdownMenuItem>

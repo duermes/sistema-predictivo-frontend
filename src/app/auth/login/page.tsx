@@ -64,6 +64,7 @@ export default function Login() {
     }
     setErrors(newErrors);
 
+    router.push("/dashboard");
     if (formValid) {
       setLoading(true);
       try {
