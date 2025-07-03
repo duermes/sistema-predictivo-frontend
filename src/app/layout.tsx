@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type {Metadata} from "next";
 import "./globals.css";
+import {AuthProvider} from "@/lib/authContext";
 
 export const metadata: Metadata = {
   title: "Sistema predictido",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` antialiased`}>{children}</body>
+      <AuthProvider>
+        <body className={` antialiased`}>{children}</body>
+      </AuthProvider>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import {useState} from "react";
+import {Button} from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,14 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-// import { Badge } from "@/components/ui/badge";
-import { Calendar, Pill, TrendingUp, Package } from "lucide-react";
-import { MonthRangeDropdown } from "@/components/ui/month-range-dropdown";
-import { MonthRange } from "@/components/ui/month-range-picker";
-import { addMonths, isBefore, isSameMonth } from "date-fns";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {Separator} from "@/components/ui/separator";
+import {Calendar, Pill, TrendingUp, Package} from "lucide-react";
+import {MonthRangeDropdown} from "@/components/ui/month-range-dropdown";
+import {MonthRange} from "@/components/ui/month-range-picker";
+import {addMonths, isBefore, isSameMonth} from "date-fns";
 
 interface PredictionData {
   medcod: string;
@@ -25,13 +24,6 @@ interface PredictionData {
   endDate: string;
   price: string;
 }
-
-// interface PredictionResult {
-//   demandaPredicta: number;
-//   confianza: number;
-//   tendencia: "up" | "down" | "stable";
-//   recomendacion: string;
-// }
 
 export default function PrediccionPastillasPage() {
   const [formData, setFormData] = useState<PredictionData>({
@@ -43,7 +35,6 @@ export default function PrediccionPastillasPage() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  //   const [result, setResult] = useState<PredictionResult | null>(null);
   const [errors, setErrors] = useState<Partial<PredictionData>>({});
   const [monthRange, setMonthRange] = useState<MonthRange>({
     from: null,
@@ -83,9 +74,9 @@ export default function PrediccionPastillasPage() {
   };
 
   const handleInputChange = (field: keyof PredictionData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({...prev, [field]: value}));
     if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: "" }));
+      setErrors((prev) => ({...prev, [field]: ""}));
     }
   };
 
@@ -164,43 +155,7 @@ export default function PrediccionPastillasPage() {
         setIsLoading(false);
       });
     setIsLoading(false);
-    // setTimeout(() => {
-    //   const mockResult: PredictionResult = {
-    //     demandaPredicta: Math.floor(Math.random() * 1000) + 100,
-    //     confianza: Math.floor(Math.random() * 30) + 70,
-    //     tendencia: ["up", "down", "stable"][Math.floor(Math.random() * 3)] as
-    //       | "up"
-    //       | "down"
-    //       | "stable",
-    //     recomendacion:
-    //       "Basado en los datos históricos, se recomienda mantener un stock de seguridad del 15% adicional.",
-    //   };
-    //   setResult(mockResult);
-    //   setIsLoading(false);
-    // }, 2000);
   };
-
-  //   const getTendenciaColor = (tendencia: string) => {
-  //     switch (tendencia) {
-  //       case "up":
-  //         return "text-green-600 bg-green-50";
-  //       case "down":
-  //         return "text-red-600 bg-red-50";
-  //       default:
-  //         return "text-yellow-600 bg-yellow-50";
-  //     }
-  //   };
-
-  //   const getTendenciaText = (tendencia: string) => {
-  //     switch (tendencia) {
-  //       case "up":
-  //         return "Creciente";
-  //       case "down":
-  //         return "Decreciente";
-  //       default:
-  //         return "Estable";
-  //     }
-  //   };
 
   return (
     <div className="p-6 space-y-6">
@@ -372,59 +327,6 @@ export default function PrediccionPastillasPage() {
                     <Package className="h-8 w-8 text-emerald-600" />
                   </div>
                 </div>
-
-                {/* <div className="bg-slate-50 p-4 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-slate-700">
-                        Nivel de Confianza
-                      </p>
-                      <p className="text-2xl font-bold text-slate-900">
-                        {result.confianza}%
-                      </p>
-                    </div>
-                    <div className="w-16 h-16 relative">
-                      <svg
-                        className="w-16 h-16 transform -rotate-90"
-                        viewBox="0 0 36 36"
-                      >
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#e5e7eb"
-                          strokeWidth="2"
-                        />
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#10b981"
-                          strokeWidth="2"
-                          strokeDasharray={`${result.confianza}, 100`}
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700">
-                    Tendencia del Mercado
-                  </span>
-                  <Badge className={getTendenciaColor(result.tendencia)}>
-                    {getTendenciaText(result.tendencia)}
-                  </Badge>
-                </div> */}
-
-                {/* <Separator /> */}
-
-                {/* <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
-                  <h4 className="font-medium text-yellow-800 mb-2">
-                    Recomendación
-                  </h4>
-                  <p className="text-sm text-yellow-700">
-                    {result.recomendacion}
-                  </p>
-                </div> */}
               </div>
             )}
           </CardContent>

@@ -1,29 +1,29 @@
 "use client";
-import { useState } from "react";
-import { FileDown, Percent } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Select, type SelectOption } from "@/components/ui/select";
+import {useState} from "react";
+import {FileDown, Percent} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Select, type SelectOption} from "@/components/ui/select";
 
-import { Checkbox } from "@/components/ui/checkbox";
-import { Card } from "@/components/ui/card";
-import { PredictionChart } from "@/components/dashboard/prediction-chart";
-import { DataTable } from "./data-table";
-import { MonthRangeDropdown } from "@/components/ui/month-range-dropdown";
-import { MonthRange } from "../ui/month-range-picker";
+import {Checkbox} from "@/components/ui/checkbox";
+// import {Card} from "@/components/ui/card";
+// import { PredictionChart } from "@/components/dashboard/prediction-chart";
+import {DataTable} from "./data-table";
+import {MonthRangeDropdown} from "@/components/ui/month-range-dropdown";
+import {MonthRange} from "../ui/month-range-picker";
 
 const productTypeOptions: SelectOption[] = [
-  { value: "I", label: "Insumo" },
-  { value: "M", label: "Medicamento" },
+  {value: "I", label: "Insumo"},
+  {value: "M", label: "Medicamento"},
 ];
 
 const demandSupportOptions: SelectOption[] = [
-  { value: "_", label: "Demanda" },
-  { value: "S", label: "Soporte" },
-  { value: "E", label: "Estrategia" },
+  {value: "_", label: "Demanda"},
+  {value: "S", label: "Soporte"},
+  {value: "E", label: "Estrategia"},
 ];
 
 const timeOptions: SelectOption[] = [
-  { value: "trimestral", label: "Trimestral" },
+  {value: "trimestral", label: "Trimestral"},
 ];
 
 const formatToYYYYMM = (date: Date) => {
@@ -166,9 +166,9 @@ export function PredictiveSystem() {
 
       {showChart && (
         <>
-          <Card className="p-4 bg-gray-50">
+          {/* <Card className="p-4 bg-gray-50">
             <PredictionChart />
-          </Card>
+          </Card> */}
           <p className="text-sm text-gray-500">
             {counter > 0 ? `Se encontraron ${counter} productos` : ""}
           </p>
