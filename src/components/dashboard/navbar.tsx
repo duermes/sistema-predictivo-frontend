@@ -35,12 +35,9 @@ import {
   Home,
   Pill,
   Settings,
-  TrendingUp,
   User,
   LogOut,
-  Package,
   Calendar,
-  FileText,
 } from "lucide-react";
 import {ReactNode} from "react";
 import {useRouter} from "next/navigation";
@@ -58,26 +55,6 @@ const navigationItems = [
         title: "Predicción de Pastillas",
         url: "/dashboard/predict",
         icon: Pill,
-      },
-    ],
-  },
-  {
-    title: "Análisis",
-    items: [
-      {
-        title: "Reportes",
-        url: "/dashboard/reportes",
-        icon: FileText,
-      },
-      {
-        title: "Tendencias",
-        url: "/dashboard/tendencias",
-        icon: TrendingUp,
-      },
-      {
-        title: "Inventario",
-        url: "/dashboard/inventario",
-        icon: Package,
       },
     ],
   },
@@ -168,10 +145,10 @@ export default function Navbar({children}: {children: ReactNode}) {
                       </Avatar>
                       <div className="flex flex-col text-left">
                         <span className="text-sm font-medium">
-                          Usuario Demo
+                          Admin
                         </span>
                         <span className="text-xs text-muted-foreground">
-                          demo@sistema.com
+                          admin@admin.com
                         </span>
                       </div>
                     </SidebarMenuButton>
