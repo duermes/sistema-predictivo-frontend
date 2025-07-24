@@ -1,16 +1,14 @@
 "use client";
-import {useState} from "react";
-import {FileDown} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Select, type SelectOption} from "@/components/ui/select";
 import jsPDF from "jspdf";
 
 import {Checkbox} from "@/components/ui/checkbox";
-// import {Card} from "@/components/ui/card";
-// import { PredictionChart } from "@/components/dashboard/prediction-chart";
+
 import {DataTable} from "./data-table";
 import {MonthRangeDropdown} from "@/components/ui/month-range-dropdown";
 import {MonthRange} from "../ui/month-range-picker";
+import { useState } from "react";
 
 const productTypeOptions: SelectOption[] = [
   {value: "I", label: "Insumo"},
